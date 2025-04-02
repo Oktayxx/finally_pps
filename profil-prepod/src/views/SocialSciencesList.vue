@@ -3,11 +3,11 @@
   <nav class="navbar">
     <div class="navbar-left">
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-      <h1 class="navbar-title">Уноверситет Муждународного Бизнеса</h1>
+      <h1 class="navbar-title">Университет Международного Бизнеса</h1>
     </div>
     <div class="navbar-buttons">
       <button @click="$router.push('/')">Главная</button>
-      <button @click="$router.push('/contacts')">Контакты</button>
+      <button @click="scrollToContacts">Контакты</button> <!-- Изменено -->
 
       <!-- Кнопка "Кафедра" с выпадающим списком -->
       <div class="dropdown">
@@ -31,7 +31,7 @@
 
     <!-- Секция преподавателей -->
     <div class="teachers">
-      <h1>Финансы и Учет</h1>
+      <h1>Социально-Гуманитарные Науки</h1>
       <div class="faculty-container">
         <!-- Кнопка "Назад" -->
         <button class="arrow-button" @click="prevPage" v-if="currentPage > 0">←</button>
@@ -55,7 +55,7 @@
     </div>
 
     <!-- Футер -->
-    <footer class="footer">
+    <footer ref="contactsSection" class="footer">
       <div class="footer-line"></div>
       <h3>Контакты</h3>
       <div class="footer-contacts">
@@ -127,6 +127,11 @@ export default {
     }
   },
   methods: {
+    scrollToContacts() {
+      this.$nextTick(() => {
+        this.$refs.contactsSection.scrollIntoView({ behavior: "smooth" });
+      });
+    },
     toggleDropdown() {
       this.dropdownVisible = !this.dropdownVisible;
     },

@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <footer class="footer">
+    <footer ref="contactsSection" class="footer">
       <div class="footer-title">
         <h3>Контакты</h3>
       </div>
@@ -111,12 +111,15 @@ const toggleDropdown = () => {
 </script>
 
 <style scoped>
+/* Общие стили */
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 100px; /* Перенесли padding внутрь */
+  padding: 0 5%;
+  box-sizing: border-box;
 }
+
 .header {
   width: 100%;
   max-width: 1500px;
@@ -125,29 +128,18 @@ const toggleDropdown = () => {
   justify-content: space-between;
   align-items: center;
   background: #1a6728;
-  color: rgb(255, 255, 255);
+  color: white;
   font-family: "Montserrat", sans-serif;
   font-size: 1.5em;
   font-weight: 400;
-  color: #ffffff;
   letter-spacing: 1px;
-  padding: 20px 100px;
-  font-size: 20px;
+  padding: 20px 5%;
   border-radius: 10px;
-  box-sizing: border-box; /* Учитывает padding в ширине */
-  box-shadow: 0 6px 15px rgba(74, 138, 62, 0.5); /* Более мягкая тень */
-
-}
-.teacher-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0px;
-  background: #ffffff;
-  font-family: Arial, sans-serif;
-  color: rgb(0, 0, 0);
+  box-shadow: 0 6px 15px rgba(74, 138, 62, 0.5);
+  box-sizing: border-box;
 }
 
+/* Навигация */
 .nav {
   display: flex;
   align-items: center;
@@ -166,7 +158,7 @@ const toggleDropdown = () => {
   border-radius: 5px;
 }
 
-
+/* Дропдаун */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -184,49 +176,42 @@ const toggleDropdown = () => {
   display: none;
 }
 
-
-
 .dropdown-content a {
   color: #050101;
   padding: 12px 16px;
   display: block;
   text-decoration: none;
-  padding: 10px;
-  cursor: pointer;
   transition: background 0.3s;
 }
-
 
 .dropdown-content a:hover {
   background: #1a6728;
   color: white;
-
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
-/* Показываем меню при v-show */
-.dropdown-content {
-  display: block;
-}
 
+/* Профиль преподавателя */
 .profile-container {
   display: flex;
-  gap: 100px;
+  flex-wrap: wrap;
+  gap: 50px;
   max-width: 1000px;
-  margin: 80px auto 0; /* Добавил отступ сверху */
+  margin: 80px auto 0;
   align-items: center;
+  justify-content: center;
 }
 
 .photo-section {
   background: #ffffff;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(81, 150, 17, 0.2), 0 0 20px rgba(104, 194, 21, 0.2);
+  box-shadow: 0 0 10px rgba(81, 150, 17, 0.2);
   text-align: center;
   width: 220px;
-  height: 300px;
+  height: auto;
   flex-shrink: 0;
   transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -264,11 +249,12 @@ const toggleDropdown = () => {
   background: white;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(81, 150, 17, 0.2), 0 0 20px rgba(81, 150, 17, 0.2);
+  box-shadow: 0 0 10px rgba(81, 150, 17, 0.2);
   min-height: 320px;
-
+  width: 100%;
 }
 
+/* Вкладки */
 .tabs {
   display: flex;
   gap: 10px;
@@ -294,11 +280,6 @@ const toggleDropdown = () => {
   transform: scale(1.1);
 }
 
-.tab i {
-  font-size: 20px;
-  color: #444;
-}
-
 .tab.active {
   background: linear-gradient(135deg, #28db21, #4b4a76);
   color: white;
@@ -314,17 +295,13 @@ const toggleDropdown = () => {
   gap: 10px;
 }
 
-.info-title i {
-  font-size: 20px;
-}
-
-/* Стиль для футера */
+/* Футер */
 .footer {
   background: white;
   color: black;
-  padding: 20px; /* Уменьшил отступы */
+  padding: 20px;
   text-align: center;
-  margin-top: 50px; /* Добавил больше пространства сверху */
+  margin-top: 50px;
 }
 
 .footer-title {
@@ -339,16 +316,13 @@ const toggleDropdown = () => {
 }
 
 .contacts-grid {
-  list-style: none;
-  padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 колонки вместо 6 */
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
   max-width: 100%;
   margin: 0 auto;
   text-align: left;
   font-size: 14px;
-  margin-top: 20px;
   background: #ffffff;
   color: #000000;
   margin-bottom: 8px;
@@ -363,8 +337,79 @@ const toggleDropdown = () => {
 
 .column p {
   font-size: 14px;
-  margin: 0; /* Удалены отступы между контактами */
+  margin: 0;
 }
 
+/* АДАПТИВНОСТЬ */
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .header {
+    font-size: 1.2em;
+    padding: 20px 5%;
+  }
+
+  .nav {
+    gap: 10px;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .photo-section {
+    width: 180px;
+  }
+
+  .info-section {
+    width: 90%;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+    font-size: 1em;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .photo-section {
+    width: 150px;
+    padding: 20px;
+  }
+
+  .info-section {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .contacts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
 </style>
-страница профиля препода

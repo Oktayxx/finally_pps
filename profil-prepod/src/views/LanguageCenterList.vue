@@ -3,11 +3,11 @@
   <nav class="navbar">
     <div class="navbar-left">
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-      <h1 class="navbar-title">Уноверситет Муждународного Бизнеса</h1>
+      <h1 class="navbar-title">Университет Международного Бизнеса</h1>
     </div>
     <div class="navbar-buttons">
       <button @click="$router.push('/')">Главная</button>
-      <button @click="$router.push('/contacts')">Контакты</button>
+      <button @click="scrollToContacts">Контакты</button> <!-- Изменено -->
 
       <!-- Кнопка "Кафедра" с выпадающим списком -->
       <div class="dropdown">
@@ -31,7 +31,7 @@
 
     <!-- Секция преподавателей -->
     <div class="teachers">
-      <h1>Финансы и Учет</h1>
+      <h1>Языковой центр</h1>
       <div class="faculty-container">
         <!-- Кнопка "Назад" -->
         <button class="arrow-button" @click="prevPage" v-if="currentPage > 0">←</button>
@@ -55,7 +55,7 @@
     </div>
 
     <!-- Футер -->
-    <footer class="footer">
+    <footer ref="contactsSection" class="footer">
       <div class="footer-line"></div>
       <h3>Контакты</h3>
       <div class="footer-contacts">
@@ -126,7 +126,11 @@ export default {
       return this.filteredProfessors.slice(start, end);
     }
   },
-  methods: {
+  methods: { scrollToContacts() {
+      this.$nextTick(() => {
+        this.$refs.contactsSection.scrollIntoView({ behavior: "smooth" });
+      });
+    },
     toggleDropdown() {
       this.dropdownVisible = !this.dropdownVisible;
     },
@@ -155,6 +159,7 @@ export default {
   margin: 0 auto;
   padding: 20px;
 }
+
 /* Навигационная панель */
 .navbar {
   background-color: #1a6728;
@@ -166,7 +171,6 @@ export default {
   align-items: center;
   border-radius: 0;
   position: relative;
-
 }
 
 /* Название университета */
@@ -175,16 +179,15 @@ export default {
   font-size: 1.5em;
   font-weight: 700;
   color: #ffffff;
-
 }
 
 /* Заголовок кафедры */
 .teachers h1 {
-  font-size: 1.5em; /* Увеличенный размер */
-  font-weight: bold; /* Жирный текст */
-  color: #1a6728; /* Новый цвет (оранжево-коричневый) */
-  text-transform: uppercase; /* Делаем заглавными буквами */
-  margin-bottom: 15px; /* Отступ снизу */
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #1a6728;
+  text-transform: uppercase;
+  margin-bottom: 15px;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -193,8 +196,9 @@ export default {
   display: flex;
   gap: 15px;
   align-items: center;
-  margin-left: 490px; /* Настроить нужный отступ вправо */
+  margin-left: 490px;
 }
+
 /* Кнопки */
 .navbar-buttons button {
   background: white;
@@ -217,15 +221,15 @@ export default {
 /* Поисковая строка */
 .search-bar {
   margin-top: 15px;
-  width: 100%; /* Растягиваем на всю доступную ширину */
+  width: 100%;
   display: flex;
   justify-content: center;
   font-family: "Montserrat", sans-serif;
 }
 
 .search-input {
-  width: 100%; /* Увеличиваем ширину */
-  max-width: 1500px; /* Ограничиваем максимальный размер */
+  width: 100%;
+  max-width: 1500px;
   padding: 12px 20px;
   font-size: 1em;
   border: 2px solid #1a6728;
@@ -263,7 +267,7 @@ export default {
   background: #fff;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Изначальная тень */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   transition: all 0.3s ease-in-out;
   font-family: "Montserrat", sans-serif;
@@ -271,7 +275,7 @@ export default {
 
 /* Эффект наведения */
 .faculty-card:hover {
-  box-shadow: none; /* Убираем тень при наведении */
+  box-shadow: none;
   transform: translateY(-5px);
 }
 
@@ -311,8 +315,8 @@ export default {
   font-size: 1.5em;
   color: white;
   cursor: pointer;
-  border-radius: 50%; /* Делаем кнопку круглой */
-  width: 50px; /* Фиксированный размер */
+  border-radius: 50%;
+  width: 50px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -325,12 +329,14 @@ export default {
   background: #1a6728;
   transform: scale(1.1);
 }
+
 .footer-line {
   width: 100%;
   height: 2px;
-  background-color: #1a6728; /* Цвет линии */
-  margin-bottom: 20px; /* Отступ снизу */
+  background-color: #1a6728;
+  margin-bottom: 20px;
 }
+
 .footer {
   background: #ffffff;
   padding: 20px 0;
@@ -343,26 +349,28 @@ export default {
   max-width: 800px;
   margin: 0 auto;
 }
+
 .footer-contacts {
   display: flex;
-  justify-content: flex-start; /* Выровнять контент влево */
+  justify-content: flex-start;
 }
 
 .contacts-list {
   display: grid;
-  grid-template-columns: repeat(4, auto); /* 4 столбца */
-  gap: 5px; /* Отступы между элементами */
-  text-align: left; /* Выравнивание текста влево */
+  grid-template-columns: repeat(4, auto);
+  gap: 5px;
+  text-align: left;
 }
 
 .contacts-list li {
-  white-space: nowrap; /* Чтобы не переносилось */
+  white-space: nowrap;
 }
 
 .footer p {
   margin: 5px 0;
   color: #ffffff;
 }
+
 .footer h3 {
   font-weight: bold;
   font-size: 1.5rem;
@@ -398,6 +406,7 @@ export default {
   background-color: #ffffff;
   border-top: 2px solid #1a6728;
 }
+
 /* Стили для выпадающего списка */
 .dropdown {
   position: relative;
@@ -407,7 +416,7 @@ export default {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  right: 0; /* Прижимает список к правому краю кнопки */
+  right: 0;
   background: white;
   border: 1px solid #ddd;
   list-style: none;
@@ -418,7 +427,6 @@ export default {
   z-index: 10;
 }
 
-
 .dropdown-menu li {
   padding: 10px;
   cursor: pointer;
@@ -428,4 +436,56 @@ export default {
 .dropdown-menu li:hover {
   background: #f0f0f0;
 }
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+  .navbar-buttons {
+    margin-left: auto;
+    gap: 10px;
+  }
+
+  .faculty-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .faculty-card {
+    width: 100%;
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .faculty-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 480px) {
+  .navbar-title {
+    font-size: 1.2em;
+  }
+
+  .faculty-list {
+    gap: 10px;
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
+}
+
 </style>
+ы

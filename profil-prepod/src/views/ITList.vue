@@ -3,11 +3,11 @@
   <nav class="navbar">
     <div class="navbar-left">
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-      <h1 class="navbar-title">Уноверситет Муждународного Бизнеса</h1>
+      <h1 class="navbar-title">Университет Международного Бизнеса</h1>
     </div>
     <div class="navbar-buttons">
       <button @click="$router.push('/')">Главная</button>
-      <button @click="$router.push('/contacts')">Контакты</button>
+      <button @click="scrollToContacts">Контакты</button> <!-- Изменено -->
 
       <!-- Кнопка "Кафедра" с выпадающим списком -->
       <div class="dropdown">
@@ -31,7 +31,7 @@
 
     <!-- Секция преподавателей -->
     <div class="teachers">
-      <h1>Финансы и Учет</h1>
+      <h1>Бизнес - Информатика</h1>
       <div class="faculty-container">
         <!-- Кнопка "Назад" -->
         <button class="arrow-button" @click="prevPage" v-if="currentPage > 0">←</button>
@@ -55,7 +55,7 @@
     </div>
 
     <!-- Футер -->
-    <footer class="footer">
+    <footer ref="contactsSection" class="footer">
       <div class="footer-line"></div>
       <h3>Контакты</h3>
       <div class="footer-contacts">
@@ -126,7 +126,11 @@ export default {
       return this.filteredProfessors.slice(start, end);
     }
   },
-  methods: {
+  methods: { scrollToContacts() {
+      this.$nextTick(() => {
+        this.$refs.contactsSection.scrollIntoView({ behavior: "smooth" });
+      });
+    },
     toggleDropdown() {
       this.dropdownVisible = !this.dropdownVisible;
     },
@@ -407,7 +411,7 @@ export default {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  right: 0; /* Прижимает список к правому краю кнопки */
+  right: 0;
   background: white;
   border: 1px solid #ddd;
   list-style: none;
@@ -425,7 +429,108 @@ export default {
   transition: background 0.3s;
 }
 
+
 .dropdown-menu li:hover {
   background: #f0f0f0;
+}
+@media (max-width: 1024px) {
+  .navbar-buttons {
+    margin-left: auto;
+    gap: 10px;
+  }
+
+  .faculty-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки вместо 4 */
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .faculty-card {
+    width: 100%;
+  }
+
+  .navbar {
+    padding: 10px 20px;
+  }
+
+  .search-input {
+    max-width: 90%;
+    padding: 10px;
+  }
+
+  .contacts-list {
+    grid-template-columns: repeat(2, auto);
+    text-align: center;
+  }
+
+  .dropdown-menu {
+    width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .navbar-buttons {
+    flex-direction: column;
+    gap: 5px;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .faculty-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .faculty-card {
+    width: 100%;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .contacts-list {
+    grid-template-columns: repeat(1, auto);
+  }
+
+  .footer {
+    padding: 10px;
+  }
+
+  .footer ul {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-title {
+    font-size: 1.2em;
+  }
+
+  .faculty-list {
+    gap: 10px;
+  }
+
+  .faculty-card {
+    padding: 10px;
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
+
+  .contacts-list {
+    gap: 5px;
+  }
 }
 </style>
